@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统---销售数据统计</title>
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="css/content.css">
+    <!-- 引入elementui样式 -->
+    <link rel="stylesheet" href="css/elementUI.css">
+    <!-- 引入本页面的样式 -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- 引入cookie -->
+    <script src="/users/IFcook"></script>
+
+
+
+</head>
+
+<body>
+
+    <!-- 测试 -->
+    <div id="app">
+        <!-- 主体 -->
+        <el-main>
+            <!-- 整体卡片布局 -->
+            <el-card class="box-card">
+                <!-- 卡片的头部 -->
+                <div slot="header" class="clearfix">
+                    <span>销售数据统计</span>
+                </div>
+                <!-- 时间选择框 -->
+                <el-time-select placeholder="起始时间" v-model="startTime" :picker-options="{
+               start: '08:30',
+               step: '00:15',
+               end: '18:30'
+             }">
+                </el-time-select>
+                <el-time-select placeholder="结束时间" v-model="endTime" :picker-options="{
+               start: '08:30',
+               step: '00:15',
+               end: '18:30',
+               minTime: startTime
+             }">
+                </el-time-select>
+                <!-- <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="活动名称">
+            <el-input v-model="form.name"></el-input>
+            <el-button type="success">提交</el-button>
+          </el-form-item>
+        </el-form> -->
+                <!-- 统计表 -->
+                <div id="box" style="width: 600px;height:400px;"></div>
+
+            </el-card>
+        </el-main>
+    </div>
+
+    <!-- 引入jq -->
+    <script src="js/jquery.min.js"></script>
+    <!-- 引入vue -->
+    <script src="js/vue.min.js"></script>
+    <!-- 引入elementui组件 -->
+    <script src="js/elementUI.js"></script>
+
+    <!-- 引入echarts -->
+    <script src="js/echarts.min.js"></script>
+    <script>
+
+        //创建vue实例化
+        new Vue({
+            //挂载视图
+            el: "#app",
+            data() {
+                return {
+                    startTime: '',
+                    endTime: ''
+                    // form: {
+                    //   name: ''
+
+                    // }
+                };
+            }
+
+        });
+
+
+        //初始化echarts实列
+        var myChart = echarts.init(document.getElementById("box"));
+        var option = {
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [120, 200, 150, 80, 70, 110, 130],
+                type: 'bar'
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---添加账号</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+   <!-- 引入cookie -->
+   <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>添加管理员账号</span>
+        </div>
+        <!-- 添加账号 -->
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm"
+          :label-position="labelPosition">
+          <!-- 用户名 -->
+          <el-form-item label="用户名" prop="usename">
+            <el-input v-model.number="ruleForm2.usename"></el-input>
+          </el-form-item>
+          <!-- 密码 -->
+          <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+          </el-form-item>
+          <!-- 确认密码 -->
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+          </el-form-item>
+          <!-- 选择用户 -->
+          <el-form-item label="选择用户组" prop="region">
+            <el-select v-model="ruleForm2.region" placeholder="请选择用户组">
+              <el-option label="超级管理员" value="超级管理员"></el-option>
+              <el-option label="管理员" value="管理员"></el-option>
+              <el-option label="普通用户" value="普通用户"></el-option>
+
+            </el-select>
+          </el-form-item>
+
+
+
+
+          <!-- 提交按钮 -->
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+            <el-button @click="resetForm('ruleForm2')">重置</el-button>
+          </el-form-item>
+        </el-form>
+
+
+
+
+      </el-card>
+    </el-main>
+
+
+  </div>
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data() {
+        //验证两次输入的密码是否一致
+
+        var validatePass2 = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请再次输入密码'));
+          } else if (value !== this.ruleForm2.pass) {
+            callback(new Error('两次输入密码不一致!'));
+          } else {
+            callback();
+          }
+        };
+        return {
+          labelPosition: 'top',
+          ruleForm2: {
+            pass: '',
+            checkPass: '',
+            usename: '',
+            region: ""
+          },
+          rules2: {
+            //密码的验证
+            pass: [
+              { required: true, message: "请输入密码", trigger: 'blur' },
+              { min: 6, max: 18, message: "密码的长度为6-18位之间", trigger: 'blur' },
+
+            ],
+            //密码的确认
+            checkPass: [
+              { required: true, message: "请输入密码", trigger: 'blur' },
+              { min: 6, max: 18, message: "密码的长度为6-18位之间", trigger: 'blur' },
+            ],
+            //用户名的验证
+            usename: [
+              { required: "true", message: "请输入用户名", trigger: 'blur' },
+              { min: 3, max: 12, message: "用户名的长度为3-12位之间", trigger: 'blur' },
+
+            ],
+            //选择框的验证
+            region: [
+              { required: true, message: '请选择用户组', trigger: 'change' }
+            ]
+          }
+        };
+      },
+      methods: {
+        submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+
+            if (valid) {
+              //获取表单的数据并发送AJAx请求在后端
+              //获取表单的数据
+             // console.log(this.ruleForm2);
+              $.post("/users/addadmin", this.ruleForm2, function (result) {
+                //根据后端返回的数据处理业务逻辑
+               // console.log(result);
+               if(result.ok){
+                  alert(result.msg);
+                  //跳转到账号管理列表中
+                  location.href="adminlist.html";
+               }else{
+                   alert(result.msg)
+                   return false;
+               }
+
+              });
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
+        }, handleOpen(key, keyPath) {
+          console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+          console.log(key, keyPath);
+        }
+
+      }
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

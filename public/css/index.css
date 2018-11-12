@@ -1,0 +1,180 @@
+/* 页面在不同的分辨率下都要铺满 */
+html,body,#app,.el-container{
+  height: 100%;
+}
+
+.el-header, .el-footer {
+  color: #333;
+  line-height: 30px;
+}
+
+.el-header h2{
+    color: #000;
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+/* 左侧栏的样式 */
+.el-aside {
+  background: url(../images/left_bg.png) repeat-y;
+}
+
+.el-main {
+  color: #333;
+  margin-top: 20px;
+}
+
+.el-main .el-card__header{
+    height: 41px;
+    line-height: 41px;
+    padding: 0px 20px;
+
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+
+    background: url(../images/cardTitleBg.png) repeat-x;
+}
+
+/* 左侧标题 */
+.el-aside a{
+    text-decoration: none;
+    color: #ccc;
+
+
+}
+#leftTite h1{
+    font-size: 24px;
+    color: #ccc;
+    text-align: right;
+    padding: 30px 0px;
+    
+}
+#leftTite p{
+    font-size: 14px;
+    color: #ccc;
+    text-align: right;
+    padding-bottom:20px;
+}
+
+/* 左侧选项卡 */
+/* 选项卡的背景 */
+.el-menu{
+    background: transparent;
+}
+
+   /* 选项卡的标题 */
+ .el-submenu__title{
+    background: url("../images/menu_bg.png") repeat-x;
+    text-align: right;
+    height: 33px;
+    line-height: 33px;
+    color: #ccc;
+    border-radius: 4px 0px 0px 4px;
+    width: 210px;
+    margin-left: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+/* 选项卡的子菜单 */
+.el-submenu .el-menu-item{
+    padding: 0px 20px;
+    text-align: right;
+    color: #ccc;
+    width: 210px;
+    margin-left: 20px;
+    border-radius: 4px 0px 0px 4px;
+    background: none;
+    font-size: 12px;
+    font-weight: bold;
+    
+}
+/* hover效果 */
+ .el-menu-item:hover{
+    background: rgba(0,0,0,0.2);
+
+    
+} 
+/* 激活效果 */
+.el-menu-item.is-active a{
+    color: #000;
+}
+.el-menu-item.is-active{
+    color: #000;
+    background: #ccc;
+}
+
+.el-submenu{
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+.el-main .el-card__body{
+    background-color: #fff;
+}
+
+#importAlert{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+body > .el-container {
+   background-color: #F8F8F8;
+}
+/* 右侧尾部样式 */
+.el-footer{
+    font-size: 12px;
+}
+
+.el-footer p{
+    border-top: solid 1px #ccc;
+    line-height: 50px;
+}
+
+/* 警示框的背景颜色 */
+.el-alert--info{
+  background: #dbe3ff;
+}
+
+
+
+
+
+
+/* 添加账号页面样式 */
+/*  输入框的宽度*/
+.el-input{
+    width: 60%;
+};
+
+
+/* 添加商品页样式 */
+.el-form-item p{
+    font-size: 12px;
+    color: #ccc;
+}
+
+
+
+.el-pagination.is-background .el-pager li:not(.disabled).active{
+    background: rgb(5, 197, 5);
+}
+.el-pagination{
+    margin-top: 10px;
+}
+.block{
+    padding-bottom: 10px;
+}
+
+
+
+/*字体颜色 */
+.cg{
+    color: rgb(11, 216, 11);
+}

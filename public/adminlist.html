@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---账号管理</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+   <!-- 引入cookie -->
+   <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>账号管理</span>
+        </div>
+        <!--账号管理表格  -->
+        <template>
+          <el-table :data="tableData" style="width: 100%">
+            <!-- id -->
+            <el-table-column label="id号">
+              <template slot-scope="scope">
+                <span>{{ scope.row.u_id }}</span>
+              </template>
+            </el-table-column>
+            <!-- 姓名 -->
+            <el-table-column label="姓名">
+              <template slot-scope="scope">
+                <p> {{ scope.row.username }}</p>
+              </template>
+            </el-table-column>
+            <!-- 日期
+            <el-table-column label="日期" prop="createdatetime" :formatter="mydateFormat">
+            </el-table-column> -->
+
+            <!-- 用户组 -->
+            <el-table-column label="用户组">
+              <template slot-scope="scope">
+                <p> {{ scope.row.usergroud }}</p>
+              </template>
+            </el-table-column>
+
+            <!-- 操作 -->
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.row.u_id)" type="primary" plain><i class="el-icon-edit"></i>编辑</el-button>
+                <!-- 根据数据的id来对数据进行增删改查 -->
+                <el-button size="mini" type="danger" @click="handleDelete(scope.row.u_id)" type="danger" plain><i class="el-icon-delete"></i>删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+
+
+      </el-card>
+    </el-main>
+
+
+  </div>
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入格式化时间 -->
+  <script src="js/moment.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      //数据
+      data() {
+        return {
+
+          tableData: []
+        };
+      },
+      methods: {
+        //编辑和删除的方法
+        /* 1.点解编辑按钮，跳到编辑的对应页面 */
+        handleEdit(id) {
+        
+          //点击编辑按钮，跳转倒修改页面,并将id传入
+          location.href="admin_edit.html?id="+id;
+          //console.log(location.href);
+          //console.log(id);
+        
+        },
+        //点击删除按钮，发送ajax请求，删除对应的数据
+        handleDelete(id) {
+          //console.log(id);
+          //发送ajax请求
+          $.get("/users/del", { id }, (result) => {
+            //接收后端反馈的数据，进行处理
+            if (result.ok) {
+              alert(result.msg)
+              //跳转到当前页面
+              //location.href="adminlist.html";
+              //location.reload();
+              //删除成功后，重新获取数据，并加载到页面中,调用ajax方法，瑶用this,这里的this值vue实列对象
+              this.AjaxFc();
+            } else {
+              alert(result.msg)
+            }
+          })
+
+        },
+        //封装ajax方法
+        AjaxFc() {
+          $.get("/users/list", (result) => {
+            //接收后端发回的数据进行处理
+           // console.log(result);
+            //将接收的数据渲染到页面
+            this.tableData = result;
+          });
+        },
+        //格式化日期的方法
+        // //格式化时间的方法
+        // mydateFormat: function (row, column) {
+        //   var date = row[column.property];
+        //   if (date == undefined) {
+        //     return "";
+        //   }
+        //   // return moment(date).format("YYYY-MM-DD");
+        //   return moment(date).format("YYYY年MM月DD日");
+        // }
+
+        //发送请求，请求数据
+      }, mounted() {
+        //修改this的指向
+        // _this = this;
+        //  console.log(this);
+        // $.get("/users/list",  (result)=> {
+        //   //接收后端发回的数据进行处理
+        //   console.log(result);
+        //   //将接收的数据渲染到页面
+        //   this.tableData = result;
+        // });
+        //封装的ajax方法,
+        this.AjaxFc();
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

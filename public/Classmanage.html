@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---分类管理</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+  <!-- 引入cookie -->
+  <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>分类管理</span>
+        </div>
+        <!-- 分类管理表格 -->
+        <el-table :data="tableData" style="width: 100%">
+            <!-- id -->
+            <el-table-column label="id" prop="cg_id">
+          </el-table-column>
+          <!-- 分类的名称 -->
+          <el-table-column label="分类名称" prop="cg_name">
+          </el-table-column>
+
+          <!-- 所属的分类 -->
+          <el-table-column label="所属分类" width="180">
+            <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.cg_fatherID }}</span>
+            </template>
+          </el-table-column>
+          <!-- 状态 -->
+          <el-table-column label="状态" prop="cg_isLocked">
+          </el-table-column>
+             <!-- 操作 -->
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleEdit(scope.row.cg_id)" type="primary" plain><i class="el-icon-edit"></i>编辑</el-button>
+              <!-- 根据数据的id来对数据进行增删改查 -->
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row.cg_id)" type="danger" plain><i class="el-icon-delete"></i>删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+      </el-card>
+    </el-main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data() {
+        return {
+          tableData: []
+        }
+      }, methods: {
+      
+        handleEdit(id) { 
+          //点击编辑按钮。跳转到商品添加页面 
+         // location.href="admin_edit.html?id="+id;
+        },
+        handleDelete(id) {
+          //点击删除按钮，发送请求,删除对应的数据；
+           $.get("/categorys/delcomo",{id},(result)=>{
+                 //接收后端返回的数据
+                 if (result.ok)
+                  {
+                    alert(result.msg);
+                    this.AjaxFc();
+
+                 } else {
+                  alert(result.msg);
+                 }
+
+           })  
+
+
+
+        }, //封装ajax方法
+        AjaxFc() {
+          $.get("/categorys/comolist", (data) => {
+            //接收后端发回的数据进行处理
+           // console.log(result);
+            //将接收的数据渲染到页面
+            this.tableData =data;
+          });
+        },
+        
+        
+        //发送请求，请求数据渲染到页面
+      }, mounted() {
+        this.AjaxFc();
+   
+      }
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

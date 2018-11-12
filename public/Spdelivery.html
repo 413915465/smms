@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---商品出库</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+   <!-- 引入cookie -->
+   <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>商品销售</span>
+        </div>
+
+        <!-- 商品条码型 -->
+
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
+          :label-position="labelPosition">
+          <el-form-item label="商品条码型：" prop="sptm">
+            <el-input type="text" v-model="ruleForm.sptm" autocomplete="off"></el-input>
+
+          </el-form-item>
+          <!-- 数量 -->
+          <el-form-item label="数量：" prop="number">
+            <el-input type="text" v-model="ruleForm.number" autocomplete="off"></el-input>
+            <span>记重商品单位为千克</span>
+          </el-form-item>
+
+          <el-button type="success">加入订单</el-button> <span class="cg">重新出库</span>
+
+        </el-form>
+        <!-- 表格 -->
+        <el-table :data="tableData" stripe style="width: 100%">
+          <el-table-column prop="name" label="名称" width="180">
+          </el-table-column>
+          <el-table-column prop="number" label="数量" width="180">
+          </el-table-column>
+          <el-table-column prop="Unitprice" label="单价（元）">
+          </el-table-column>
+          <el-table-column prop="Totalprice" label="总价（元）">
+          </el-table-column>
+          <el-table-column prop="Preprice" label="优惠价（元）">
+
+          </el-table-column>
+         
+        </el-table>
+        <el-form ref="ruleForm" :model="ruleForm" label-width="80px"  :label-position="labelPosition">
+            <el-form-item label="会员卡号：">
+              <el-input v-model="ruleForm.Vipname"></el-input>
+              <p>填写会员卡卡号</p>
+            </el-form-item>
+          </el-form>
+          <el-button type="success">确认提交</el-button>
+
+
+      </el-card>
+    </el-main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data() {
+        return {
+          tableData: [{
+        
+      
+          name: '暂无商品',
+          number: "",
+            Unitprice:"",
+            Totalprice:"",
+            Preprice:""
+
+
+        },{
+          name: '总价：0元, 优惠：0元, ',
+          number: "小计：0元",
+            Unitprice:"",
+            Totalprice:"",
+            Preprice:""
+        }
+        ],
+
+          labelPosition: 'top',
+          ruleForm: {
+            sptm: '',
+            Vipname:""
+          
+          },
+          rules: {
+            sptm: [
+              { required: true, message: '请扫码', trigger: 'blur' },
+
+            ],
+            number: [
+              { required: true, message: '请输入商品的数量', trigger: 'blur' },
+
+            ]
+          }
+        };
+      },
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

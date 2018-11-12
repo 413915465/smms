@@ -1,0 +1,48 @@
+/* 背景图 */
+body{
+background: url("../images/timg.jpg")
+}
+
+
+
+
+/* 卡片的样式 */
+.text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .box-card {
+    width: 480px;
+  }
+  .el-card__header h2 span{
+    color: rgb(2, 116, 2);
+  }
+
+  /* 登陆表单居中 */
+  .box-card{
+      position: absolute;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 300px;
+  };
+ 
+  
+  .el-card__header{
+      padding: 5px 20px;
+  }

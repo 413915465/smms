@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统--登陆页面</title>
+    <!-- 引入elementui样式 -->
+    <link rel="stylesheet" href="css/elementUI.css">
+    <!-- 引入本页面的样式 -->
+    <link rel="stylesheet" href="css/login.css">
+
+
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- 卡片 -->
+        <el-card class="box-card">
+            <!-- 登陆的头部 -->
+            <div slot="header" class="clearfix">
+                <h2><span class="el-icon-upload"></span>超市管理系统</h2>
+
+            </div>
+            <!-- 登陆的表单 -->
+            <div class="text item">
+
+                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+                    <!-- 用户名 -->
+                    <el-form-item label="用户名" prop="username">
+                        <el-input type="text" v-model="ruleForm2.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <!-- 密码 -->
+                    <el-form-item label="登陆密码" prop="checkPass">
+                        <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <!-- 提交 和 重置-->
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+                        <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+
+
+
+        </el-card>
+
+
+
+
+    </div>
+
+
+    <!-- 引入jQ -->
+    <script src="js/jquery.min.js"></script>
+
+
+    <!-- 引入vue -->
+    <script src="js/vue.min.js"></script>
+    <!-- 引入elementui组件 -->
+    <script src="js/elementUI.js"></script>
+    <script>
+        //vue实列
+        new Vue({
+            //挂载视图
+            el: "#app",
+            //数据对象
+            data() {
+                return {
+                    ruleForm2: {
+                        username: '',
+                        checkPass: '',
+
+                    },
+                    //验证
+                    rules2: {
+                        // 用户名的验证
+                        username: [
+                            //必须填写的验证
+                            { required: true, message: "请输入用户名", trigger: 'blur' },
+                            //用户名长度的验证
+
+                            { min: 3, max: 12, message: "请输入用户名", trigger: 'blur' }
+
+                        ],
+                        //密码的验证
+                        checkPass: [
+                            //必填验证
+                            { required: true, message: "请输入密码", trigger: 'blur' },
+                            //用户名长度的验证
+
+                            { min: 6, max: 12, message: "密码的长度在6-12位", trigger: 'blur' }
+
+
+
+                        ]
+
+                    }
+                };
+            },
+            //自定义的方法
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            //点击提交按钮，将获取的内容发送ajax请求到后端
+                            $.post("/users/sigin", this.ruleForm2, (result) => {
+                                //根据后端返回的结果，处理业务逻辑
+                                //console.log(result);
+                                if (result.ok) {
+                                    alert(result.msg);
+                                    //跳转页面
+                                    location.href = "index.1.html";
+                                } else {
+                                    alert(result.msg);
+                                }
+                            })
+
+
+
+
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+
+
+
+
+
+
+        })
+
+
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

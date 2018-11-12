@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---添加分类</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+  <!-- 引入cookie -->
+  <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>添加分类</span>
+        </div>
+        <!-- 分类选项 -->
+
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm"
+          :label-position="labelPosition">
+
+          <!-- 选择用户 -->
+          <el-form-item label="所属分类" prop="cg_fatherID">
+            <el-select v-model="ruleForm2.cg_fatherID" placeholder="--请选择分类--">
+              <el-option label="顶级分类" value="0">---顶级分类---</el-option>
+              <el-option v-for="(c, index) in categoryList" :key="index" :label="c.cg_name" :value="c.cg_id"></el-option>
+
+
+
+              <!-- <el-select v-model="ruleForm2.cg_fatherID" placeholder="请选择父级分类">
+                <el-option label="顶级分类" value="0">---顶级分类---</el-option>
+                <el-option v-for="(c, index) in categoryList" :key="index" :label="c.cg_name" :value="c.cg_id"></el-option>
+            </el-select> -->
+
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="分类名称：" prop="cg_name">
+            <el-input type="text" v-model="ruleForm2.cg_name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+
+        <!-- 单选框 -->
+        <div>
+          <p>状态:</p><br>
+          <template>
+            <el-radio v-model="ruleForm2.cg_isLocked" label="1">启用</el-radio>
+            <el-radio v-model="ruleForm2.cg_isLocked" label="2">禁用</el-radio>
+          </template>
+          <!-- 提交按钮 -->
+          <p style="padding-top:15px;">
+            <el-button type="success" @click="submitForm('ruleForm2')">添加</el-button>
+            <el-button @click="resetForm('ruleForm2')">重置</el-button>
+          </p>
+        </div>
+
+      </el-card>
+    </el-main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data() {
+
+
+        return {
+          categoryList: [],//定义下拉列表的数据
+          labelPosition: 'top',
+          ruleForm2: {
+            cg_fatherID: '',
+            cg_name: "",
+            cg_isLocked: '1'
+          },
+          rules2: {
+
+            //用户名的验证
+            cg_name: [
+              { required: "true", message: "请输入商品分类名称", trigger: 'blur' },
+            ],
+            //选择框的验证
+            cg_fatherID: [
+              { required: true, message: '请选择分类', trigger: 'change' }
+            ]
+          }
+        };
+      }, methods: {
+        submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              //点解添加按钮,将表单的数据发送给后端
+              $.post("/categorys/addcategoy", this.ruleForm2, (result) => {
+                //后端返回的数据处理业务逻辑
+
+                if (result.Ok) {
+                  if (confirm("继续添加吗?")) {
+                    location.reload();
+                  }
+                  else {
+                    location.href = "category_list.html";
+                  }
+                }
+                else {
+                  alert(result.msg);
+                }
+              });
+
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
+        }
+      }
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

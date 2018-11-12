@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---添加商品</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+   <!-- 引入cookie -->
+   <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>添加商品</span>
+        </div>
+
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
+          :label-position="labelPosition">
+          <!-- 下拉选择框 -->
+
+          <!-- 选择用户 -->
+          <el-form-item label="所属分类" prop="region">
+            <el-select v-model="ruleForm.region" placeholder="--选择分类--">
+              <el-option label="生鲜冷食" value="sxls"></el-option>
+            </el-select>
+          </el-form-item>
+          <!-- 商品条码型 -->
+          <el-form-item label="商品条码型：" prop="barcode:">
+            <el-input type="text" v-model="ruleForm.barcode:" autocomplete="off"></el-input>
+            <el-button type="success">生成条码</el-button>
+          </el-form-item>
+
+          <!-- 商品名称 -->
+          <el-form-item label="商品名称：" prop="goodsname">
+            <el-input type="text" v-model="ruleForm.goodsname" autocomplete="off"></el-input>
+
+          </el-form-item>
+
+          <!-- 商品售价 -->
+          <el-form-item label="商品售价：" prop="saleprice">
+            <el-input type="text" v-model="ruleForm.saleprice" autocomplete="off"></el-input><span>元</span>
+
+          </el-form-item>
+          <!-- 市场价 -->
+          <el-form-item label="市场价格：" prop="marketprice">
+            <el-input type="text" v-model="ruleForm.marketprice" autocomplete="off"></el-input><span>元</span>
+            <p>默认是市场价为售价的1.2倍</p>
+          </el-form-item>
+
+          <!-- 商品进价 -->
+          <el-form-item label="商品进价：" prop="goodsprice">
+            <el-input type="text" v-model="ruleForm.goodsprice" autocomplete="off"></el-input><span>元</span>
+
+          </el-form-item>
+          <!-- 库存数量  -->
+          <el-form-item label="库存数量 ：" prop="stockNum">
+            <el-input type="text" v-model="ruleForm.stockNum" autocomplete="off"></el-input>
+            <p>记重商品单位为千克</p>
+          </el-form-item>
+          <!-- 商品重量 -->
+          <el-form-item label="商品重量：" prop=" weigth">
+            <el-input type="text" v-model="ruleForm. weigth" autocomplete="off"></el-input>
+
+          </el-form-item>
+          <!-- 商品单位 -->
+          <el-form-item label="商品单位：" prop="Cmunit">
+            <el-input type="text" v-model="ruleForm.Cmunit" autocomplete="off"></el-input>
+      </el-form-item>
+
+        </el-form>
+        <!-- 会员优惠 -->
+        <p style="padding-top:15px;">会员优惠:</p><br/>
+        <template>
+          <el-radio v-model="radio" label="1">享受</el-radio>
+          <el-radio v-model="radio" label="2">不享受</el-radio>
+        </template>
+
+        <!--是否促销  -->
+        <template>
+          <p style="padding-top:15px;">是否促销:</p><br/>
+
+          <el-radio v-model="radio" label="1">是</el-radio>
+          <el-radio v-model="radio" label="2">否</el-radio>
+        </template>
+        <!-- 商品简介 -->
+        <p style="padding-top:15px;">商品简介:</p><br/>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea">
+        </el-input>
+
+
+
+
+
+
+
+
+
+
+
+      </el-card>
+    </el-main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data() {
+        return {
+          textarea: '',
+          radio: '1',
+          labelPosition: 'top',
+          ruleForm: {
+            barcode: '',//条码
+            region: '',
+            goodsname:'', //商品名称
+            saleprice: "",//售价
+            marketprice: "",//市场价
+            goodsprice:'',  //商品进价
+            stockNum:0,   //库存数量 
+            weigth:0,//重量
+            Cmunit: "",
+
+          },
+          rules: {
+            barcode: [
+              { required: true, message: '请扫码', trigger: 'blur' },
+
+            ],
+            region: [
+              { required: true, message: '请选择活动区域', trigger: 'change' }
+            ],
+
+            goodsname: [
+              { required: true, message: '请选择商品名称', trigger: 'change' }
+            ],
+            saleprice: [
+              { required: true, message: '请选择活动区域', trigger: 'change' }
+            ],
+          }
+        };
+      },
+     
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

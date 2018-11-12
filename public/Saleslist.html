@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---销售列表</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+   <!-- 引入cookie -->
+   <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 主体 -->
+    <el-main>
+      <!-- 整体卡片布局 -->
+      <el-card class="box-card">
+        <!-- 卡片的头部 -->
+        <div slot="header" class="clearfix">
+          <span>销售明细</span>
+        </div>
+        <!-- 起止时间 -->
+        <template>
+          <div class="block">
+            <span class="demonstration">起止时间</span>
+            <el-date-picker v-model="value7" type="daterange" align="right" unlink-panels range-separator="至"
+              start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+            </el-date-picker>
+          </div>
+        </template>
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="关键字">
+            <el-input v-model="form.Keyword"></el-input><span>&nbsp;商品名称，订单号，客户名字，会员卡号&nbsp;<el-button type="success">查询</el-button></span>
+            
+          </el-form-item>
+        </el-form>
+        <!-- 表格 -->
+        <el-table :data="tableData" stripe style="width: 100%">
+          <el-table-column prop="sptm" label="商品条码" width="180">
+          </el-table-column>
+          <el-table-column prop="spname" label="商品名称" width="180">
+          </el-table-column>
+          <el-table-column prop="region" label="所属分类">
+          </el-table-column>
+          <el-table-column prop="spprice" label="售价（元）">
+          </el-table-column>
+          <el-table-column prop="Cxprice" label="促销价（元）">
+          </el-table-column>
+          <el-table-column prop="Marketvalue" label="市场价（元）">
+          </el-table-column>
+          <el-table-column prop="kc" label="库存">
+          </el-table-column>
+
+
+
+          <el-table-column label="管理">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"><i class="el-icon-edit"></i></el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-setting"></i></el-button>
+            </template>
+          </el-table-column>
+
+        </el-table>
+      
+        <el-pagination background="true" layout="prev, pager, next" :total="1000">
+        </el-pagination>
+
+      </el-card>
+    </el-main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      data(){
+      return {
+        tableData: [{
+            sptm: '2464568789',
+            spname: '旺仔牛奶',
+            region: '牛奶',
+            spprice: "25",
+            Cxprice: "20",
+            Marketvalue: "26",
+            kc: "0(缺)",
+            kcze: "0.00",
+            xsze: "0.00"
+          }, {
+            sptm: '2464568789',
+            spname: '旺仔牛奶',
+            region: '牛奶',
+            spprice: "25",
+            Cxprice: "20",
+            Marketvalue: "26",
+            kc: "0(缺)",
+            kcze: "0.00",
+            xsze: "0.00"
+          }, {
+            sptm: '2464568789',
+            spname: '旺仔牛奶',
+            region: '牛奶',
+            spprice: "25",
+            Cxprice: "20",
+            Marketvalue: "26",
+            kc: "0(缺)",
+            kcze: "0.00",
+            xsze: "0.00"
+          }, {
+            sptm: '2464568789',
+            spname: '旺仔牛奶',
+            region: '牛奶',
+            spprice: "25",
+            Cxprice: "20",
+            Marketvalue: "26",
+            kc: "0(缺)",
+            kcze: "0.00",
+            xsze: "0.00"
+          }],
+       
+        form: {
+          Keyword: ''},
+        pickerOptions2: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        value6: '',
+        value7: ''
+      }
+    }, methods: {
+        handleEdit(index, row) {
+          console.log(index, row);
+        },
+        handleDelete(index, row) {
+          console.log(index, row);
+        },
+        onSubmit() {
+          console.log('submit!');
+        }
+      }
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

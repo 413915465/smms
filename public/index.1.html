@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超市管理系统---首页</title>
+  <!-- 引入公共样式 -->
+  <link rel="stylesheet" href="css/content.css">
+  <!-- 引入elementui样式 -->
+  <link rel="stylesheet" href="css/elementUI.css">
+  <!-- 引入本页面的样式 -->
+  <link rel="stylesheet" href="css/index.css">
+  <!-- 引入cookie -->
+  <script src="/users/IFcook"></script>
+
+</head>
+
+<body>
+
+  <!-- 测试 -->
+  <div id="app">
+    <!-- 左边侧边栏 -->
+    <el-container>
+      <el-aside width="230px">
+        <!-- 左边标题 -->
+        <div id="leftTite">
+          <h1>华联超市管理系统</h1>
+          <p>您好.admin</p>
+          <p><a href="index.1.html">管理首页</a>&nbsp;| &nbsp;<a href="/users/singout">退出系统</a></p>
+        </div>
+
+        <!-- 左侧选项菜单 -->
+
+
+        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened="true">
+          <!-- 选项卡1 -->
+          <el-submenu index="1">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>分类管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+              <el-menu-item index="1-1"><a href="Classmanage.html" target="mainContent">分类管理</a></el-menu-item>
+              <el-menu-item index="1-2"><a href="addclass.html" target="mainContent">添加分类</a></el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+          <!-- 选项卡2 -->
+          <el-submenu index="2">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>商品管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+                <el-menu-item index="2-1"><a href="Cmgl.html" target="mainContent">商品管理</a></el-menu-item>
+                <el-menu-item index="2-2"><a href="addsp.html" target="mainContent">添加商品</a></el-menu-item>
+     </el-menu-item-group>
+</el-submenu>
+
+          <!-- 选项卡3 -->
+
+          <el-submenu index="3">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>进货管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+                <el-menu-item index="3-1"><a href="stock.html" target="mainContent">库存管理</a></el-menu-item>
+                <el-menu-item index="3-2"><a href="addkc.html" target="mainContent">添加库存</a></el-menu-item>
+            </el-menu-item-group>
+
+
+          </el-submenu>
+          <!-- 选项卡4 -->
+
+          <el-submenu index="4">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>出货管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+              <el-menu-item index="4-1"><a href="Saleslist.html" target="mainContent">销售列表</a></el-menu-item>
+              <el-menu-item index="4-2"><a href="Spdelivery.html" target="mainContent">商品出库</a></el-menu-item>
+              <el-menu-item index="4-3"><a href="Cmth.html" target="mainContent">商品退货</a></el-menu-item>
+
+            </el-menu-item-group>
+
+
+          </el-submenu>
+          <!-- 选项卡5 -->
+          <el-submenu index="5">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>统计管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+              <el-menu-item index="5-1"><a href="xstjb.html" target="mainContent">销售统计</a></el-menu-item>
+              <el-menu-item index="5-2"><a href="jhtjb.html" target="mainContent">进货统计</a></el-menu-item>
+          
+
+            </el-menu-item-group>
+
+
+          </el-submenu>
+          <!-- 选项卡6 -->
+          <el-submenu index="6">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>账号管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+              <el-menu-item index="6-1"><a href="adminadd.1.html" target="mainContent">添加账号</a></el-menu-item>
+              <el-menu-item index="6-2"><a href="adminlist.html" target="mainContent">账号管理</a></el-menu-item>
+              <el-menu-item index="6-3"><a href="passwordxg.html" target="mainContent">修改密码</a></el-menu-item>
+
+            </el-menu-item-group>
+
+
+          </el-submenu>
+            <!-- 选项卡8 -->
+            <el-submenu index="8">
+                <template slot="title">
+                  <!-- 选项卡的标题 -->
+                  <span>会员管理</span>
+                </template>
+                <!-- 选项卡的内容 -->
+                <el-menu-item-group>
+    
+                  <el-menu-item index="8-1"><a href="Vipadd.html" target="mainContent">添加账号</a></el-menu-item>
+                  <el-menu-item index="8-2"><a href="VIPgl.html" target="mainContent">账号管理</a></el-menu-item>
+                 
+    
+                </el-menu-item-group>
+    
+    
+              </el-submenu>
+          <!-- 选项卡7 -->
+          <el-submenu index="7">
+            <template slot="title">
+              <!-- 选项卡的标题 -->
+              <span>系统管理</span>
+            </template>
+            <!-- 选项卡的内容 -->
+            <el-menu-item-group>
+
+              <el-menu-item index="7-1"><a href="index.2.html" target="mainContent">系统信息</a></el-menu-item>
+              <el-menu-item index="7-2">系统配置</el-menu-item>
+              <el-menu-item index="7-3">权限管理</el-menu-item>
+              <el-menu-item index="7-4">添加管理组</el-menu-item>
+              
+            </el-menu-item-group>
+    </el-submenu>
+        </el-menu>
+     </el-aside>
+      <el-container>
+        <!-- 右边头部 -->
+        <el-header>
+          <h2>欢迎您 admin</h2>
+          <p>查看详细的系统信息</p>
+        </el-header>
+        <!-- 内容的开始 -->
+         <iframe src="index.2.html" frameborder="0" name="mainContent" scrolling="auto" width="100%" height="100%"></iframe>
+
+
+        <!-- 内容的结束 -->
+          
+        <!-- 尾部 -->
+        <el-footer>
+          <p>
+            <p>&copy; copyright2018 华联超市管理系统</p>
+        </el-footer>
+      </el-container>
+    </el-container>
+
+
+
+  </div>
+
+
+  <!-- 引入jq -->
+  <script src="js/jquery.min.js"></script>
+  <!-- 引入vue -->
+  <script src="js/vue.min.js"></script>
+  <!-- 引入elementui组件 -->
+  <script src="js/elementUI.js"></script>
+  <script>
+    //创建vue实例化
+    new Vue({
+      //挂载视图
+      el: "#app",
+      //表格的数据
+      data() {
+        return {
+          tableData: [{
+            Commodityname: "力士洗发水",
+
+            Salesvolume: '8'
+          }, {
+            Commodityname: '六神花露水',
+
+            Salesvolume: ' 1517 '
+          }, {
+            Commodityname: '葡萄酒',
+
+            Salesvolume: ' 1519 '
+          }, {
+            Commodityname: '康师傅方便面',
+
+            Salesvolume: '1516 '
+          }]
+        }
+      },
+      methods: {
+        handleOpen(key, keyPath) {
+          console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+          console.log(key, keyPath);
+        }
+      }
+
+
+
+    })
+
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>
