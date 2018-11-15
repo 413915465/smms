@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="css/elementUI.css">
   <!-- 引入本页面的样式 -->
   <link rel="stylesheet" href="css/index.css">
-   <!-- 引入cookie -->
-   <script src="/users/IFcook"></script>
+  <!-- 引入cookie -->
+  <script src="/users/IFcook"></script>
 
 </head>
 
@@ -29,77 +29,124 @@
         <div slot="header" class="clearfix">
           <span>商品管理</span>
         </div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-          <el-form-item label="">
-            <el-select v-model="formInline.region" placeholder="--选择分类">
-              <el-option label="生鲜冷食" value="sxls"></el-option>
-              <el-option label="食品酒水" value="spjs"></el-option>
-              <el-option label="日用品" value="jjry"></el-option>
-              <el-option label="粮油米面" value="lymm"></el-option>
-              <el-option label="家具家电" value="jjjd"></el-option>
-            </el-select>
+        <!-- 查询 -->
+        <!-- 选择分类 -->
+      
+          <el-form :inline="true" :model="search" id="searchForm" class="demo-form-inline">
+              <el-form-item label="所属分类">
+                  <el-select v-model="search.category" placeholder="请选择">
+                      <el-option v-for="(c, index) in categoryList" :key="index" :label="c.cg_name" :value="c.cg_id"></el-option>
+                  </el-select>
+                </el-form-item>
+        <!-- 关键词查询 -->
+     
+          <el-form-item label="关键字">
+            <el-input v-model="search.keywords" placeholder="关键字"></el-input>
           </el-form-item>
 
-          <el-form-item label="关键字：">
-            <el-input v-model="formInline.user" placeholder=""></el-input><span>(商品名称，条形码)</span>
-          </el-form-item>
+          <!-- 查询按钮 -->
           <el-form-item>
             <el-button type="success" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
 
-        <!-- 表格 -->
-        <el-table :data="tableData" stripe style="width: 100%">
-          <el-table-column prop="sptm" label="商品条码" width="180">
-          </el-table-column>
-          <el-table-column prop="spname" label="商品名称" width="180">
-          </el-table-column>
-          <el-table-column prop="region" label="所属分类">
-          </el-table-column>
-          <el-table-column prop="spprice" label="售价（元）">
-          </el-table-column>
-          <el-table-column prop="Cxprice" label="促销价（元）">
-          </el-table-column>
-          <el-table-column prop="Marketvalue" label="市场价（元）">
-          </el-table-column>
-          <el-table-column prop="kc" label="库存">
-          </el-table-column>
 
+          <template>
+          <el-table :data="tableData" style="width: 100%">
+            <!-- id -->
+            <el-table-column label="id号" width="50px">
+              <template slot-scope="scope">
+                <span>{{ scope.row.good_id }}</span>
+              </template>
+            </el-table-column>
+            <!-- 条形码 -->
+            <el-table-column label="条形码">
+              <template slot-scope="scope">
+                <p> {{ scope.row.barcode }}</p>
+              </template>
+            </el-table-column>
+            <!-- 商品名称 -->
+            <el-table-column label="商品名称" width="100px">
+              <template slot-scope="scope">
+                <p> {{ scope.row.goodsname }}</p>
+              </template>
+            </el-table-column>
+            <!-- 商品进价 -->
+            <el-table-column label="进价" width="100px">
+              <template slot-scope="scope">
+                <p class="cred"> {{ scope.row.goodsprice | formatPrice }}</p>
+              </template>
+            </el-table-column>
+            <!-- 商品市场 -->
+            <el-table-column label="市场价" width="100px">
+              <template slot-scope="scope">
+                <p> {{ scope.row.marketprice | formatPrice }}</p>
+              </template>
+            </el-table-column>
+            <!-- 商品销售价 -->
+            <el-table-column label="进价" width="100px" class-name="cred">
+              <template slot-scope="scope">
+                <p> {{ scope.row.saleprice | formatPrice }}</p>
+              </template>
+            </el-table-column>
+            <!-- 商品库存 -->
+            <el-table-column label="库存" width="50px">
+              <template slot-scope="scope">
+                <p> {{ scope.row.stockNum }}</p>
+              </template>
+            </el-table-column>
+            <!-- 重量 -->
+            <el-table-column label="重量" width="50px">
+              <template slot-scope="scope">
+                <p> {{ scope.row.weigth }}</p>
+              </template>
+            </el-table-column>
+            <!-- 单位 -->
+            <el-table-column label="单位" width="50px">
+              <template slot-scope="scope">
+                <p> {{ scope.row.unit }}</p>
+              </template>
+            </el-table-column>
+            <!-- 操作 -->
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini" @click="handleEdit(scope.row.good_id)" type="primary" plain><i class="el-icon-edit"></i>编辑</el-button>
+                <!-- 根据数据的id来对数据进行增删改查 -->
+                <el-button size="mini" type="danger" @click="handleDelete(scope.row.good_id)" type="danger" plain><i
+                    class="el-icon-delete"></i>删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
 
-
-          <el-table-column label="管理">
-            <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"><i class="el-icon-edit"></i></el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-setting"></i></el-button>
-            </template>
-          </el-table-column>
-
-        </el-table>
-      
-        <el-pagination background="true" layout="prev, pager, next" :total="1000">
+        <!-- 翻页 -->
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+          :page-sizes="[1,2,3,4,5,100, 200, 300, 400]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+          :total=" total">
         </el-pagination>
 
 
-
-
+        <!-- page-size：每页显示的条数
+             total：总条目数
+             page-count：总页数
+            page-sizes：每页显示个数选择器
+            current-page：当前页数
+         跳过的条数：(current-page-1)*page-size
+        
+        -->
       </el-card>
     </el-main>
+
+
   </div>
-
-
-
-
-
-
-
-
 
 
   <!-- 引入jq -->
   <script src="js/jquery.min.js"></script>
   <!-- 引入vue -->
   <script src="js/vue.min.js"></script>
+  <!-- 引入格式化时间 -->
+  <script src="js/moment.min.js"></script>
   <!-- 引入elementui组件 -->
   <script src="js/elementUI.js"></script>
   <script>
@@ -107,67 +154,118 @@
     new Vue({
       //挂载视图
       el: "#app",
+      //数据
       data() {
         return {
-          formInline: {
-            user: '',
-            region: ''
-          },
-          tableData: [{
-            sptm: '2464568789',
-            spname: '旺仔牛奶',
-            region: '牛奶',
-            spprice: "25",
-            Cxprice: "20",
-            Marketvalue: "26",
-            kc: "0(缺)",
-            kcze: "0.00",
-            xsze: "0.00"
-          }, {
-            sptm: '2464568789',
-            spname: '旺仔牛奶',
-            region: '牛奶',
-            spprice: "25",
-            Cxprice: "20",
-            Marketvalue: "26",
-            kc: "0(缺)",
-            kcze: "0.00",
-            xsze: "0.00"
-          }, {
-            sptm: '2464568789',
-            spname: '旺仔牛奶',
-            region: '牛奶',
-            spprice: "25",
-            Cxprice: "20",
-            Marketvalue: "26",
-            kc: "0(缺)",
-            kcze: "0.00",
-            xsze: "0.00"
-          }, {
-            sptm: '2464568789',
-            spname: '旺仔牛奶',
-            region: '牛奶',
-            spprice: "25",
-            Cxprice: "20",
-            Marketvalue: "26",
-            kc: "0(缺)",
-            kcze: "0.00",
-            xsze: "0.00"
-          }]
+          total: 15,//总条数  
+          pageSize: 5,//每页显示的条数
+          currentPage: 1,//当前的页数
+          tableData: [],
+          categoryList: [],//定义下拉列表的数据
+          search: {
+            keywords: '',
+            category: ''
+          }
+         };
+      }, //格式化价格
+      filters: {
+        //过滤器做一个管道格式化价格
+        formatPrice(price) {
+          return price.toFixed(2);
         }
       },
       methods: {
-        handleEdit(index, row) {
-          console.log(index, row);
-        },
-        handleDelete(index, row) {
-          console.log(index, row);
-        },
         onSubmit() {
-          console.log('submit!');
+         // console.log('submit!');
+         //console.log(this.search)
+          //点击按钮，将分类和关键字发送给后端
+          var _this=this;
+          $.get("/goods/listSearch",this.search,(categoryList)=>{
+               //接收返回的数据,处理业务逻辑
+               
+               _this.tableData=categoryList;
+               console.log(_this.tableData);
+          });
+         //this.AjaxFc();
+         },
+        /* 1.点解编辑按钮，跳到编辑的对应页面 */
+        handleEdit(id) {
+        },
+        //点击删除按钮，发送ajax请求，删除对应的数据
+        handleDelete(id) {
+          //发送ajax请求
+          $.get("/goods/del", { id }, (result) => {
+            //接收后端反馈的数据，进行处理
+            if (result.ok) {
+              alert(result.msg)
+              //删除成功后，重新获取数据，并加载到页面中,调用ajax方法，这里的this值vue实列对象
+              this.AjaxFc();
+            } else {
+              alert(result.msg)
+            }
+          })
+
+        },
+        //封装ajax方法
+        AjaxFc() {
+          //把当前页码和每页条数传给后端,定义一个对象保存
+          let pageboj = {
+            pageSize: this.pageSize,  //每页显示的条数
+            currentPage: this.currentPage//当前的页码
+          }
+          //将数据发送给后端
+          $.get("/goods/listPager", pageboj, (pageData) => {
+            //接收结果
+           
+            this.total = pageData.total;
+            this.tableData = pageData.datalist;
+          });
+        },//每页显示多少条
+        handleSizeChange(val) {
+          this.pageSize = val;
+          // console.log(`每页 ${val} 条`);
+          //调用函数重新渲染页面
+          this.AjaxFc();
+
+        },//当前页码
+        handleCurrentChange(val) {
+          // console.log(`当前页: ${val}`);
+          this.currentPage = val;
+          //调用函数
+          this.AjaxFc();
+
         }
+
+        //发送请求，请求数据
+      }, mounted() {
+        this.AjaxFc();
+        //发送ajax请求，将接收的数据渲染到模板
+    
+        $.get("/goods/comolist", (data) => {
+          this.categoryList = data;
+        })
+   
       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     });
+
 
 
 

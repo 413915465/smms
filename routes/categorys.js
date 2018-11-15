@@ -41,11 +41,7 @@ var router = express.Router();
       else{
         res.send({"Ok":false,"msg":"分类添加失败!"});
       }
-   
-
-
      })
-
 
  });
 
@@ -53,7 +49,7 @@ var router = express.Router();
 //商品分类列表数据
 router.get("/comolist",(req,res)=>{
    //构造sql
-let sqlstr="select * from categoryGoods order by cg_id DESC";
+let sqlstr="select t1.*,t2.cg_name as fathername from categorygoods as t1 LEFT JOIN categorygoods as t2 on t1.cg_fatherID=t2.cg_id;";
 //执行sql
 connection.query(sqlstr,(err,data)=>{
     if(err) throw err;

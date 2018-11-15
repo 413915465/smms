@@ -178,3 +178,12 @@ body > .el-container {
 .cg{
     color: rgb(11, 216, 11);
 }
+
+
+.cred{
+    color: red;
+}
+
+#searchForm .el-input{
+  width: 100%;
+}
